@@ -1,0 +1,5 @@
+# Development & testing dependencies.
+-r requirements.txt
+pytest>=7.4.0
+reportlab>=4.0.0
+httpx>=0.25.0

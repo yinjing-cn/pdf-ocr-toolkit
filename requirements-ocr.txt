@@ -1,0 +1,10 @@
+# Optional OCR engine dependencies.
+# Install only when you need OCR for image-based / scanned PDFs:
+#   pip install -r requirements-ocr.txt
+#
+# NOTE: pytesseract also requires the system-level Tesseract binary.
+#       See https://github.com/tesseract-ocr/tesseract for installation.
+-r requirements.txt
+pytesseract>=0.3.10
+Pillow>=10.0.0
+pdf2image>=1.16.0

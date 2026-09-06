@@ -1,0 +1,25 @@
+{
+  "document_type": "invoice",
+  "fields": {
+    "_title": "Invoice",
+    "invoice_number": "INV-2025-0042",
+    "invoice_date": "2025-03-15",
+    "due_date": "2025-04-14",
+    "currency": "USD",
+    "seller": "Demo Trading Co Ltd",
+    "seller_address": "128 Fictional Road, Demo City; Tel: +1 555 0100 2048",
+    "buyer": "Acme Corp",
+    "buyer_address": "77 Example Avenue, Sample Town; Attn: Procurement Department",
+    "subtotal": 1695.0,
+    "tax_rate": "8.5%",
+    "tax_amount": 144.08,
+    "total_amount": 1839.08
+  },
+  "line_items": [
+    {"description": "Wireless Mouse (Demo Model)", "quantity": 10, "unit_price": 25.0, "amount": 250.0},
+    {"description": "Mechanical Keyboard Demo Unit", "quantity": 5, "unit_price": 120.0, "amount": 600.0},
+    {"description": "USB-C Charging Cable 2m", "quantity": 20, "unit_price": 8.5, "amount": 170.0},
+    {"description": "27-inch Demo Monitor 4K", "quantity": 2, "unit_price": 337.5, "amount": 675.0}
+  ],
+  "warnings": []
+}

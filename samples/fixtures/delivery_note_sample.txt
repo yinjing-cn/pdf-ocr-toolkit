@@ -1,0 +1,26 @@
+Acme Corp
+Warehouse District, 42 Logistics Lane, Demo City
+Tel: +1 555 0132 8899
+
+                    DELIVERY NOTE
+
+Delivery Note No: DN-2025-1031
+Delivery Date: 2025-03-18
+Order Ref: PO-7781
+
+Customer: Blue River Cafe
+Ship To Address:
+Blue River Cafe
+9 Riverside Walk, Sample Town
+Delivery Contact: Jordan Lee
+
+Items Shipped:
+
+Description                          Qty    Unit Price
+Ceramic Coffee Cup 250ml              40          4.50
+Stainless Steel Milk Frother          12         18.00
+Wooden Stirrers (box of 1000)          5
+Paper Napkin Pack 200pcs              30          3.20
+
+Received By: Taylor Morgan (signed)
+All goods are fictional demo data for pdf-ocr-toolkit.

@@ -1,0 +1,31 @@
+Demo Trading Co Ltd
+128 Fictional Road, Demo City
+Tel: +1 555 0100 2048
+
+
+                       INVOICE
+
+Invoice No: INV-2025-0042
+Invoice Date: 2025-03-15
+Due Date: 2025-04-14
+Currency: USD
+
+Bill To:
+Acme Corp
+77 Example Avenue, Sample Town
+Attn: Procurement Department
+
+
+Description                          Qty    Unit Price      Amount
+Wireless Mouse (Demo Model)           10        25.00      250.00
+Mechanical Keyboard Demo Unit          5       120.00      600.00
+USB-C Charging Cable 2m               20         8.50      170.00
+27-inch Demo Monitor 4K               2       337.50      675.00
+
+Subtotal:                                           1,695.00
+Tax Rate: 8.5%
+Tax Amount:                                          144.08
+Total Amount:                                      1,839.08
+
+Payment Terms: Net 30 days. Please remit to Demo Trading Co Ltd.
+This is a fictional document generated for demonstration purposes only.

@@ -1,0 +1,21 @@
+{
+  "document_type": "delivery_note",
+  "fields": {
+    "_title": "Delivery Note",
+    "note_number": "DN-2025-1031",
+    "delivery_date": "2025-03-18",
+    "order_reference": "PO-7781",
+    "supplier": "Acme Corp",
+    "supplier_address": "Warehouse District, 42 Logistics Lane, Demo City; Tel: +1 555 0132 8899",
+    "customer": "Blue River Cafe",
+    "ship_to_address": "9 Riverside Walk, Sample Town; Delivery Contact: Jordan Lee",
+    "received_by": "Taylor Morgan (signed)"
+  },
+  "line_items": [
+    {"description": "Ceramic Coffee Cup 250ml", "quantity": 40, "unit_price": 4.5, "amount": null},
+    {"description": "Stainless Steel Milk Frother", "quantity": 12, "unit_price": 18.0, "amount": null},
+    {"description": "Wooden Stirrers (box of 1000)", "quantity": 5, "unit_price": null, "amount": null},
+    {"description": "Paper Napkin Pack 200pcs", "quantity": 30, "unit_price": 3.2, "amount": null}
+  ],
+  "warnings": []
+}

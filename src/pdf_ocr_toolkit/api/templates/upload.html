@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>pdf-ocr-toolkit — Document Extraction</title>
+  <style>
+    :root { --brand: #1f4e78; --bg: #f5f7fa; --card: #ffffff; --border: #d9e1f2; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg); color: #1c2733; line-height: 1.55;
+    }
+    .wrap { max-width: 720px; margin: 48px auto; padding: 0 20px; }
+    header h1 { color: var(--brand); margin: 0 0 4px; font-size: 26px; }
+    header p { margin: 0 0 28px; color: #5b6b7c; }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 28px; box-shadow: 0 4px 18px rgba(31, 78, 120, .06);
+    }
+    label { display: block; font-weight: 600; margin: 14px 0 6px; font-size: 14px; }
+    input[type=file], select {
+      width: 100%; padding: 10px; border: 1px solid var(--border);
+      border-radius: 6px; background: #fff; font-size: 14px;
+    }
+    button {
+      margin-top: 22px; width: 100%; padding: 12px; border: none; border-radius: 6px;
+      background: var(--brand); color: #fff; font-size: 15px; font-weight: 600;
+      cursor: pointer;
+    }
+    button:disabled { opacity: .55; cursor: wait; }
+    .result { margin-top: 22px; display: none; }
+    .result.show { display: block; }
+    .status { font-weight: 600; }
+    .ok { color: #1a7f37; } .err { color: #c0392b; }
+    pre {
+      background: #0f1720; color: #d6e2f0; padding: 14px; border-radius: 6px;
+      overflow-x: auto; font-size: 12.5px; max-height: 320px;
+    }
+    a.dl { display: inline-block; margin-top: 12px; color: var(--brand); font-weight: 600; }
+    footer { margin-top: 30px; text-align: center; font-size: 12.5px; color: #8a97a6; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>pdf-ocr-toolkit</h1>
+      <p>Turn scanned invoices &amp; delivery notes into structured Excel / CSV / JSON.</p>
+    </header>
+
+    <!-- screenshot: web ui -->
+    <div class="card">
+      <form id="job-form">
+        <label for="file">Document (PDF or TXT)</label>
+        <input type="file" id="file" name="file" accept=".pdf,.txt" required />
+
+        <label for="doc_type">Document type</label>
+        <select id="doc_type" name="doc_type">
+          <option value="invoice">Generic Invoice</option>
+          <option value="delivery_note">Delivery Note</option>
+        </select>
+
+        <label for="fmt">Export format</label>
+        <select id="fmt" name="fmt">
+          <option value="xlsx">Excel (.xlsx)</option>
+          <option value="csv">CSV (.csv)</option>
+          <option value="json">JSON (.json)</option>
+        </select>
+
+        <button type="submit" id="submit-btn">Extract document</button>
+      </form>
+
+      <div class="result" id="result">
+        <p class="status" id="status-line"></p>
+        <pre id="preview"></pre>
+        <a class="dl" id="download-link" href="#" style="display:none">⬇ Download result file</a>
+      </div>
+    </div>
+
+    <footer>Pluggable parser architecture · OCR optional · <code>POST /api/jobs</code></footer>
+  </div>
+
+  <script>
+    const form = document.getElementById("job-form");
+    const btn = document.getElementById("submit-btn");
+    const resultBox = document.getElementById("result");
+    const statusLine = document.getElementById("status-line");
+    const preview = document.getElementById("preview");
+    const dl = document.getElementById("download-link");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      btn.disabled = true; btn.textContent = "Processing…";
+      resultBox.classList.add("show");
+      statusLine.textContent = "Uploading document…"; statusLine.className = "status";
+      preview.textContent = ""; dl.style.display = "none";
+
+      const data = new FormData(form);
+      try {
+        const resp = await fetch("/api/jobs", { method: "POST", body: data });
+        const body = await resp.json();
+        if (!resp.ok) throw new Error(body.detail || "Request failed");
+
+        const job = await pollJob(body.job_id);
+        if (job.status === "done") {
+          statusLine.textContent = "✓ Extraction complete"; statusLine.className = "status ok";
+          preview.textContent = JSON.stringify(job.preview, null, 2);
+          dl.href = `/api/jobs/${job.job_id}/download`;
+          dl.style.display = "inline-block";
+        } else {
+          statusLine.textContent = "✗ " + (job.error || "Job failed");
+          statusLine.className = "status err";
+        }
+      } catch (err) {
+        statusLine.textContent = "✗ " + err.message; statusLine.className = "status err";
+      } finally {
+        btn.disabled = false; btn.textContent = "Extract document";
+      }
+    });
+
+    async function pollJob(jobId) {
+      for (let i = 0; i < 60; i++) {
+        const resp = await fetch(`/api/jobs/${jobId}`);
+        const job = await resp.json();
+        if (job.status === "done" || job.status === "failed") return job;
+        statusLine.textContent = "Processing… (status: " + job.status + ")";
+        await new Promise((r) => setTimeout(r, 1000));
+      }
+      throw new Error("Timed out waiting for the job to finish.");
+    }
+  </script>
+</body>
+</html>
